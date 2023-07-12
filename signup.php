@@ -95,8 +95,14 @@ if (isset($_POST['email']) && isset($_POST['pass1']) && isset($_POST['pass2'])) 
             echo "<script>alert('Account already exists with this name')</script>";
         } else {
             $personid = rand(100000, 999999);
+
+
             $sql = "INSERT INTO `users` (`email`, `password`, `personid`) VALUES ('$email', '$pass1', $personid)";
             mysqli_query($con, $sql);
+
+            $sql = "CREATE TABLE a$personid (`id` INT NOT NULL AUTO_INCREMENT , `email` VARCHAR(50) NOT NULL , `contact_name` INT(50) NOT NULL , PRIMARY KEY (`id`))";
+            mysqli_query($con, $sql);
+
             echo "<script>alert('account created succesfully :)')</script>";
         }
     } else {

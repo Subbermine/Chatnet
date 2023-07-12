@@ -32,7 +32,7 @@
 <body>
     <h2>Login</h2>
     <div class="form-cont">
-        <form>
+        <form action="index.php" method="post">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input name="email" type="email" class="form-control" id="exampleInputEmail1"
@@ -48,3 +48,34 @@
         <div id="signup">New here? <a href="signup.php">Sign up</a></div>
     </div>
 </body>
+<?php
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    $sql = "select * from users where email like '$email' AND password like '" . $password . "'";
+
+    require "dbconnect.php";
+
+
+    $result = mysqli_query($con, $sql);
+
+    if (mysqli_num_rows($result)) {
+        session_start();
+
+        $row = mysqli_fetch_assoc($result);
+
+        echo $row["email"];
+
+        $_SESSION["email"] = $email;
+        $_SESSION["password"] = $password;
+        $_SESSION["personid"] = $row["personid"];
+        $_SESSION["loggedin"] = true;
+
+        header("location: main.php");
+    } else
+        echo "<script>alert('Email or password is wrong')</script>";
+}
+
+
+?>
