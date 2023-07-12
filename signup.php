@@ -78,9 +78,9 @@
             <label class='form-check-label' for='exampleCheck1'>I have read the terms and conditions</label>
         </div>
         <div onclick="alert('There are no terms and conditions')" id='terms'>Terms and conditions</div>
-        <button type='submit' id='submit' class='btn btn-primary'>Submit</button>
+        <button type='submit' id='submit' class='btn btn-primary'>Sign Up</button>
     </form>
-    <div id='login'>Already have an account? <a href='login.php'>Login</a></div>
+    <div id='login'>Already have an account? <a href='index.php'>Login</a></div>
 </div>
 <?php
 if (isset($_POST['email']) && isset($_POST['pass1']) && isset($_POST['pass2'])) {
@@ -99,8 +99,6 @@ if (isset($_POST['email']) && isset($_POST['pass1']) && isset($_POST['pass2'])) 
             mysqli_query($con, $sql);
             echo "<script>alert('account created succesfully :)')</script>";
         }
-
-
     } else {
         echo "<script>alert('Both the passwords must be same')</script>";
     }
