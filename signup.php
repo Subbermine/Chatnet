@@ -80,12 +80,29 @@
         <div onclick="alert('There are no terms and conditions')" id='terms'>Terms and conditions</div>
         <button type='submit' id='submit' class='btn btn-primary'>Submit</button>
     </form>
-    <div id='login'>Already have an account? <a href=''>Login</a></div>
+    <div id='login'>Already have an account? <a href='login.php'>Login</a></div>
 </div>
 <?php
 if (isset($_POST['email']) && isset($_POST['pass1']) && isset($_POST['pass2'])) {
     $email = $_POST['email'];
     $pass1 = $_POST['pass1'];
     $pass2 = $_POST['pass2'];
+    require "dbconnect.php";
+    if ($pass1 == $pass2) {
+        $sql = "SELECT * FROM users WHERE email LIKE '$email'";
+        $result = mysqli_query($con, $sql);
+        if (mysqli_num_rows($result)) {
+            echo "<script>alert('Account already exists with this name')</script>";
+        } else {
+            $personid = rand(100000, 999999);
+            $sql = "INSERT INTO `users` (`email`, `password`, `personid`) VALUES ('$email', '$pass1', $personid)";
+            mysqli_query($con, $sql);
+            echo "<script>alert('account created succesfully :)')</script>";
+        }
+
+
+    } else {
+        echo "<script>alert('Both the passwords must be same')</script>";
+    }
 }
 ?>

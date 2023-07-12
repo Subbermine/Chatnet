@@ -1,7 +1,11 @@
-<style>
-    h1 {
-        text-align: center;
-    }
-</style>
+<?php
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'login';
 
-<h1>Hello</h1>
+$con = mysqli_connect($servername, $username, $password, $database);
+if (!$con) {
+    die("Error detected" . mysqli_error($con));
+}
+?>
