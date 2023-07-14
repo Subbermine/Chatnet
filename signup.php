@@ -1,4 +1,42 @@
-<?php require 'nav.php'; ?>
+<?php require 'nav.php';
+
+if (isset($_POST['email']) && isset($_POST['pass1']) && isset($_POST['pass2'])) {
+    $email = $_POST['email'];
+    $pass1 = $_POST['pass1'];
+    $pass2 = $_POST['pass2'];
+    require "dbconnect.php";
+    if ($pass1 == $pass2) {
+        $sql = "SELECT * FROM users WHERE email LIKE '$email'";
+        $result = mysqli_query($con, $sql);
+        if (mysqli_num_rows($result)) {
+            echo "<script>alert('Account already exists with this name')</script>";
+        } else {
+            $personid = rand(100000, 999999);
+
+
+            $sql = "INSERT INTO `users` (`email`, `password`, `personid`) VALUES ('$email', '$pass1', $personid)";
+            mysqli_query($con, $sql);
+
+            $sql = "CREATE TABLE a$personid (`id` INT NOT NULL AUTO_INCREMENT , `email` VARCHAR(50) NOT NULL , `contact_name` VARCHAR(50) NOT NULL , PRIMARY KEY (`id`))";
+            mysqli_query($con, $sql);
+
+            echo "<div id='alert' class='alert alert-success alert-dismissible fade show' role='alert'>
+            <strong>Success!</strong> Your sign up was successful!
+            <button id='close' type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span  aria-hidden='true'>&times;</span>
+            </button>
+            </div>";
+        }
+
+    } else {
+        echo "<script>alert('Both the passwords must be same')</script>";
+    }
+}
+
+?>
+<script>document.getElementById("close").onclick = function () {
+        document.getElementById("alert").style.display = "none";
+    }</script>
 <style>
     * {
         padding: 0;
@@ -82,31 +120,3 @@
     </form>
     <div id='login'>Already have an account? <a href='index.php'>Login</a></div>
 </div>
-<?php
-if (isset($_POST['email']) && isset($_POST['pass1']) && isset($_POST['pass2'])) {
-    $email = $_POST['email'];
-    $pass1 = $_POST['pass1'];
-    $pass2 = $_POST['pass2'];
-    require "dbconnect.php";
-    if ($pass1 == $pass2) {
-        $sql = "SELECT * FROM users WHERE email LIKE '$email'";
-        $result = mysqli_query($con, $sql);
-        if (mysqli_num_rows($result)) {
-            echo "<script>alert('Account already exists with this name')</script>";
-        } else {
-            $personid = rand(100000, 999999);
-
-
-            $sql = "INSERT INTO `users` (`email`, `password`, `personid`) VALUES ('$email', '$pass1', $personid)";
-            mysqli_query($con, $sql);
-
-            $sql = "CREATE TABLE a$personid (`id` INT NOT NULL AUTO_INCREMENT , `email` VARCHAR(50) NOT NULL , `contact_name` INT(50) NOT NULL , PRIMARY KEY (`id`))";
-            mysqli_query($con, $sql);
-
-            echo "<script>alert('account created succesfully :)')</script>";
-        }
-    } else {
-        echo "<script>alert('Both the passwords must be same')</script>";
-    }
-}
-?>
