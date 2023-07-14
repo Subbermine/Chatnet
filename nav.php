@@ -5,7 +5,7 @@
 session_start();
 if (isset($_SESSION["loggedin"]))
     if ($_SESSION["loggedin"])
-        echo "<a href='logout.php'><button style='margin-right:1rem;' class='btn btn-outline-danger'>Log Out</button></a>";
+        echo "<button id='logout' style='margin-right:1rem;' onclick='logout()' class='dis_button btn btn-outline-danger'>Log Out</button>";
 echo "</nav>
 <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'
     integrity='sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM' crossorigin='anonymous'>
