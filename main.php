@@ -95,6 +95,20 @@ if (!isset($_SESSION))
                     $sql = "INSERT INTO `a$id` ( `id` , `email` , `contact_name` ) VALUES ( NULL, '$email' , '$name' )";
 
                     $result = mysqli_query($con, $sql);
+
+                    $sql = "SELECT * FROM users WHERE `email` LIKE '$email'";
+
+                    $result = mysqli_query($con, $sql);
+
+                    $row = mysqli_fetch_assoc($result);
+
+                    $other_id = $row["personid"];
+
+                    $own_email = $_SESSION["email"];
+
+                    $sql = "INSERT INTO `a$other_id` ( `id` , `email` , `contact_name` ) VALUES ( NULL, '$own_email' , 'unknown contact' )";
+
+                    mysqli_query($con, $sql);
                 }
             } else {
                 echo "<script>alert('Account does not exists')</script>";
