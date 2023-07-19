@@ -1,4 +1,4 @@
-<?php echo "<nav class='navbar navbar-dark bg-dark'>
+<?php echo "<nav class='navbar navbar-dark bg-dark fixed-top '>
     <a class='navbar-brand' href='#'>
     <i class='fa-solid fa-comments'></i> Chatnet
     </a>";
